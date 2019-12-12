@@ -5,13 +5,15 @@ import { FlexboxContainer } from 'shared/styles/flexboxContainer';
 import { QuoteDetail } from 'components/quoteDetail/quoteDetail';
 import { WATCHLIST_TABLE_NAME, BUTTONS } from 'shared/constants/stringConstantsSelectors';
 import Typography from '@material-ui/core/Typography';
-import { AddNewSymbol } from 'components/addNewSymbol/addNewSymbol';
+import { AddNewSymbol } from 'components/addNewSymbol';
 import Button from '@material-ui/core/Button';
 
 export class Dashboard extends Component {
 
+    static defualtSymbols = ['SPY','DJI','RUS','NDX','TSLA'];
+
     componentDidMount() {
-        this.data();
+        this.data(this.defualtSymbols);
     }
 
     data = symbolList => {
@@ -46,7 +48,7 @@ export class Dashboard extends Component {
         } = this.props;
 
         const quoteDetailCardDisplay = quoteDetails && 
-                <div style={{width: '40%', margin: '1%'}}>
+                <div style={{width: '60%', margin: '1%'}}>
                     <QuoteDetail record={quoteDetails} onClose={setQuoteDetails} onRemove={closeDetailsAndRemoveFromWatchlist} />
                 </div>
 

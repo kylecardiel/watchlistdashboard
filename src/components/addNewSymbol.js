@@ -16,11 +16,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const AddNewSymbol = props => {
-
     const [text, setText] = useState();
     const handleTextChange = event => { setText(event.target.value); };
-
+    
     const classes = useStyles();
+
     return (
         <form className={classes.container} noValidate autoComplete="on">
             <TextField

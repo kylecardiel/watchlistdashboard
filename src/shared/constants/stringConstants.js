@@ -1,10 +1,11 @@
 export const STRING_CONSTANTS = Object.freeze({
     NAVBAR: {
-        TITLE: 'E*Trade Code Challenge - Watchlist Dashboard',
+        TITLE: 'Dashboard',
     },
     BUTTONS: {
         SUMBIT: 'Submit',
         UPDATE: 'Update',
+        DELETE: 'X',
     },
     TABLE: {
         NAME: 'My Watchlist',
@@ -26,3 +27,5 @@ export const STRING_CONSTANTS = Object.freeze({
         },
     },
 });
+
+// TITLE: 'E*Trade Code Challenge - Watchlist Dashboard',

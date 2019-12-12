@@ -6,13 +6,11 @@ const baseURL = 'https://api.worldtradingdata.com/api/v1/stock';
 
 export class API {
 
-    makeRealAPICalls = false;
+    static makeRealAPICalls = true;
 
-    static handleDataRequestsAPI = request => {
-
-        if(this.makeRealAPICalls){
-            const requestList = ['SPY','DJI','RUS','NDX','TSLA'].join(',');
-            let finalRequest = `${baseURL}?symbol=${requestList}&api_token=${apiToken}`
+    static handleDataRequestsAPI = symbolList => {
+        if(!API.makeRealAPICalls){
+            let finalRequest = `${baseURL}?symbol=${symbolList}&api_token=${apiToken}`
             return axios.get(finalRequest).then(response => response.data.data);
         } else {
             let promise = new Promise((resolve, reject) => {
@@ -28,13 +26,14 @@ export class API {
     }
 
     static getNewSymbol = symbol => {
-        if(this.makeRealAPICalls){
+        if(!API.makeRealAPICalls){
             let finalRequest = `${baseURL}?symbol=${symbol}&api_token=${apiToken}`
-            return axios.get(finalRequest).then(response => response.data.data);
+            return axios.get(finalRequest).then(response => response.data.data[0]);
         } else {
             let promise = new Promise((resolve, reject) => {
                 const data =     {
                     'symbol': symbol,
+                    'name': 'Full Name',
                     'price_open': '000',
                     'day_high': '000',
                     'day_low': '000',
