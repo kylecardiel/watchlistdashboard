@@ -15,6 +15,7 @@ router.get('/symbol/', async (request, response, next) => {
     } catch (error) {
         response.status(500).json({ message: error.message });
     }
+    
     next();
 });
 

@@ -1,6 +1,7 @@
 import * as actions from 'store/dataSet/dataSetActions';
 import cloneDeep from 'lodash/cloneDeep';
 import { initialState } from 'store/initialState';
+import sortBy from 'lodash/sortBy';
 
 export const dataSet = (state = initialState.dataSet, action) => {
     switch (action.type) {
@@ -17,9 +18,10 @@ export const dataSet = (state = initialState.dataSet, action) => {
         return cloneState;
     }
     case actions.ADD_SYMBOL: {
-
         const cloneState = cloneDeep(state);
-        cloneState.displayedData.push(action.payload)
+        const dataToUpdate = cloneState.displayedData;
+        dataToUpdate.push(action.payload);
+        cloneState.displayedData = sortBy(dataToUpdate, [ s => s.symbol ]);
         return cloneState;
     }
     case actions.SET_QUOTE_DETAILS_DATA: {

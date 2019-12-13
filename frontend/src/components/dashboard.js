@@ -29,7 +29,7 @@ export class Dashboard extends Component {
                 if(data.message){
                     NotificationUtil.display(NOTIFICATION_TYPES.ERROR, data.message)
                 } else {
-                    this.data();
+                    this.props.addSymbol(data)
                     NotificationUtil.display(NOTIFICATION_TYPES.SUCCESS, NOTIFICATION_MESSAGES.SUCCESSFUL_ADD);
                 }
             });
@@ -74,7 +74,6 @@ export class Dashboard extends Component {
                 <div style={{ width: '80%', margin: '1%' }}>
                     <WatchListTable data={displayedData} onRowClick={this.getQuoteDetails} refresh={this.data}/>
                 </div>
-
                 {quoteDetailCardDisplay}
             </FlexboxContainer>
     
