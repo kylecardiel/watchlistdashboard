@@ -23,7 +23,10 @@ export class Dashboard extends Component {
 
     addNewSymbol = symbol => {
         API.createNewWatchlistSymbol(symbol)
-            .then(() => this.data());
+            .then(data => {
+                console.log(data)
+                this.data();
+            });
     }
 
     updateWatchlistData = () => {
@@ -49,14 +52,16 @@ export class Dashboard extends Component {
 
         return (
             <FlexboxContainer>
-                {quoteDetailCardDisplay}
-                <div style={{ width: '80%', margin: '1%' }}>
+                <div style={{ width: '10%', marginTop: '2%' }}>
                     <Typography variant="h5" component="h2">{WATCHLIST_TABLE_NAME}</Typography>
-                    <WatchListTable data={displayedData} onRowClick={setQuoteDetails} refresh={this.data}/>
                 </div>
-                <div style={{ width: '40%', margin: '1%' }}>
+                <div style={{ width: '40%'}}>
                     <AddNewSymbol onSubmit={this.addNewSymbol}/>
                 </div>
+                <div style={{ width: '80%', margin: '1%' }}>
+                    <WatchListTable data={displayedData} onRowClick={setQuoteDetails} refresh={this.data}/>
+                </div>
+                {quoteDetailCardDisplay}
             </FlexboxContainer>
     
         );

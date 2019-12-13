@@ -3,9 +3,7 @@ export const STRING_CONSTANTS = Object.freeze({
         TITLE: 'Dashboard',
     },
     BUTTONS: {
-        SUMBIT: 'Submit',
-        UPDATE: 'Update',
-        DELETE: 'X',
+        ADD_TO_LIST: 'Add to WatchList',
     },
     TABLE: {
         NAME: 'My Watchlist',
@@ -22,9 +20,5 @@ export const STRING_CONSTANTS = Object.freeze({
     },
     QUOTE_DETAIL: {
         HEADER: 'Quote Details',
-        BUTTONS: {
-            CLOSE: 'Close',
-            REMOVE: 'Remove From Watchlist',
-        },
     },
 });
