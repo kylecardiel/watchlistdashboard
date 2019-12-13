@@ -6,6 +6,8 @@ import { QuoteDetail } from 'components/quoteDetail/quoteDetail';
 import { WATCHLIST_TABLE_NAME } from 'shared/constants/stringConstantsSelectors';
 import Typography from '@material-ui/core/Typography';
 import { AddNewSymbol } from 'components/addNewSymbol';
+import { NOTIFICATION_TYPES, NOTIFICATION_MESSAGES } from 'shared/constants/stringConstantsSelectors';
+import { NotificationUtil } from 'shared/util/displayNotifications';
 
 export class Dashboard extends Component {
 
@@ -24,8 +26,19 @@ export class Dashboard extends Component {
     addNewSymbol = symbol => {
         API.createNewWatchlistSymbol(symbol)
             .then(data => {
-                console.log(data)
-                this.data();
+                if(data.message){
+                    NotificationUtil.display(NOTIFICATION_TYPES.ERROR, data.message)
+                } else {
+                    this.data();
+                    NotificationUtil.display(NOTIFICATION_TYPES.SUCCESS, NOTIFICATION_MESSAGES.SUCCESSFUL_ADD);
+                }
+            });
+    }
+
+    getQuoteDetails = symbolId => {
+        API.getSpecificSymbol(symbolId)
+            .then(data => {
+                this.props.setQuoteDetails(data);
             });
     }
 
@@ -59,8 +72,9 @@ export class Dashboard extends Component {
                     <AddNewSymbol onSubmit={this.addNewSymbol}/>
                 </div>
                 <div style={{ width: '80%', margin: '1%' }}>
-                    <WatchListTable data={displayedData} onRowClick={setQuoteDetails} refresh={this.data}/>
+                    <WatchListTable data={displayedData} onRowClick={this.getQuoteDetails} refresh={this.data}/>
                 </div>
+
                 {quoteDetailCardDisplay}
             </FlexboxContainer>
     

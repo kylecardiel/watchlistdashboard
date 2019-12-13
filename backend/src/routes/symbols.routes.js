@@ -1,26 +1,39 @@
 require('dotenv').config();
 const axios = require('axios');
-
 const express = require('express');
 const router = express.Router();
 const symbolsSchema = require('../models/symbols');
 
-router.get('/', async (request, response, next) => {
+router.get('/symbol/', async (request, response, next) => {
     try {
         const symbols = await symbolsSchema.find();
-        response.json(symbols);
+        const subsetSymbols = symbols.map(symbol => 
+            (({ _id, name, symbol, price_open, day_high, day_low, close_yesterday, volume, currency }) => (
+                { _id, name, symbol, price_open, day_high,  day_low, close_yesterday, volume, currency  }
+            ))(symbol));
+        response.json(subsetSymbols);
     } catch (error) {
         response.status(500).json({ message: error.message });
     }
     next();
 });
 
-router.get('/:id', getSymbol, (request, response) => {
+router.get('/symbol/:id', getSymbol, (request, response) => {
     response.json(response.symbol);
 });
 
-router.post('/', async (request, response) => {
-    getMarketData(request.body.symbol)
+router.post('/symbol/', async (request, response) => {
+    
+    const allSymbols = await symbolsSchema.find();
+    let symbolAlreadyExists = false;
+    allSymbols.map(record => {
+        if(record.symbol === request.body.symbol){
+            symbolAlreadyExists = true;
+        }
+    });
+
+    if(!symbolAlreadyExists){
+        getMarketData(request.body.symbol)
         .then(
             async data => {
                 const symbol = new symbolsSchema(data);
@@ -30,18 +43,19 @@ router.post('/', async (request, response) => {
                 } catch (error) {
                     response.status(400).json({ message: error.message });
                 }
-            });
+        });
+    } else {
+        response.json({ message: 'Symbols already exists in watchlist' });
+    }
 });
 
-router.patch('/:id', getSymbol, async (request, response) => {
+router.patch('/symbol/:id', getSymbol, async (request, response) => {
     getMarketData(response.symbol.symbol)
         .then(
             async data => {
-                const obj = Object.assign({}, response.symbol, data);
-                const symbol = new symbolsSchema(obj);
+                Object.assign(response.symbol, data)
                 try {
-                    await response.symbol.remove();
-                    const updateSymbol = await symbol.save();
+                    const updateSymbol = await response.symbol.save();
                     response.json(updateSymbol);
                 } catch (error) {
                     response.status(400).json({ message: error.message });
@@ -49,10 +63,10 @@ router.patch('/:id', getSymbol, async (request, response) => {
             });
 });
 
-router.delete('/:id', getSymbol, async (request, response) => {
+router.delete('/symbol/:id', getSymbol, async (request, response) => {
     try {
         await response.symbol.remove();
-        response.json({ message: 'Deleted symbol' });
+        response.json({ message: 'Symbol deleted successfully' });
     } catch (error) {
         response.status(500).json({ message: error.message });
     }

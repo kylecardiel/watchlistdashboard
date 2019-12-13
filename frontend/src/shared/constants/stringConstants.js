@@ -21,4 +21,16 @@ export const STRING_CONSTANTS = Object.freeze({
     QUOTE_DETAIL: {
         HEADER: 'Quote Details',
     },
+    NOTIFICATIONS: {
+        TYPES: {
+            INFO: 'Info',
+            WARNING: 'Warning',
+            ERROR: 'Error',
+            SUCCESS: 'Success',
+        },
+        MESSAGES:{
+            SUCCESSFUL_ADD: 'Symbol successful added to watchlist',
+            SUCCESSFUL_UPDATE: 'Symbol successful updated',
+        }
+    },
 });

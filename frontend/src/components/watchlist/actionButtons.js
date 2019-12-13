@@ -5,6 +5,8 @@ import { FlexboxContainer } from 'shared/styles/flexboxContainer';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
+import { NOTIFICATION_TYPES, NOTIFICATION_MESSAGES } from 'shared/constants/stringConstantsSelectors';
+import { NotificationUtil } from 'shared/util/displayNotifications';
 
 export const ActionButtons = props => {
     
@@ -13,7 +15,10 @@ export const ActionButtons = props => {
             <FlexboxContainer>
                 <IconButton color="primary"
                     onClick={e => {
-                            API.updateWatchlistBySymbol(props.record_id).then(() => props.refresh());
+                            API.updateWatchlistBySymbol(props.record_id).then(data => {
+                                NotificationUtil.display(NOTIFICATION_TYPES.SUCCESS, NOTIFICATION_MESSAGES.SUCCESSFUL_UPDATE);
+                                props.refresh();
+                            });
                             e.stopPropagation();
                     }}
                 >
@@ -21,7 +26,10 @@ export const ActionButtons = props => {
                 </IconButton>
                 <IconButton color="secondary"
                     onClick={e => {
-                        API.deleteWatchlistBySymbol(props.record_id).then(() => props.refresh());
+                        API.deleteWatchlistBySymbol(props.record_id).then(data => {
+                            NotificationUtil.display(NOTIFICATION_TYPES.SUCCESS, data.message);
+                            props.refresh();
+                        });
                         e.stopPropagation();
                     }}
                 >
