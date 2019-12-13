@@ -1,30 +1,32 @@
 import React from 'react';
 import TableCell from '@material-ui/core/TableCell';
-import Button from '@material-ui/core/Button';
-import { BUTTONS } from '../../shared/constants/stringConstantsSelectors';
 import { API } from 'shared/api/api';
 import { FlexboxContainer } from 'shared/styles/flexboxContainer';
+import RefreshIcon from '@material-ui/icons/Refresh';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
 
 export const ActionButtons = props => {
+    
     return(
         <TableCell>
             <FlexboxContainer>
-                <Button variant="contained"
+                <IconButton color="primary"
                     onClick={e => {
-                        API.updateWatchlistBySymbol(props.record_id).then(() => props.refresh());
-                        e.stopPropagation();
+                            API.updateWatchlistBySymbol(props.record_id).then(() => props.refresh());
+                            e.stopPropagation();
                     }}
                 >
-                    {BUTTONS.UPDATE}
-                </Button>
-                <Button variant="contained" color="secondary" 
+                    <RefreshIcon/>
+                </IconButton>
+                <IconButton color="secondary"
                     onClick={e => {
                         API.deleteWatchlistBySymbol(props.record_id).then(() => props.refresh());
                         e.stopPropagation();
                     }}
                 >
-                    {BUTTONS.DELETE}
-                </Button>
+                    <DeleteIcon/>
+                </IconButton>
             </FlexboxContainer>
         </TableCell>
     );
