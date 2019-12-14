@@ -46,7 +46,7 @@ router.post('/symbol/', async (request, response) => {
                 }
         });
     } else {
-        response.json({ message: 'Symbols already exists in watchlist' });
+        response.json({ message: `Symbol:  ${request.body.symbol}, already exists in watchlist` });
     }
 });
 
