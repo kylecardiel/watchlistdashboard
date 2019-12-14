@@ -31,6 +31,7 @@ export const STRING_CONSTANTS = Object.freeze({
         MESSAGES:{
             SUCCESSFUL_ADD: 'Symbol successful added to watchlist',
             SUCCESSFUL_UPDATE: 'Symbol successful updated',
+            SUCCESSFUL_DELETE: 'Symbol deleted successfully',
         }
     },
 });

@@ -37,16 +37,20 @@ router.post('/symbol/', async (request, response) => {
         getMarketData(request.body.symbol)
         .then(
             async data => {
-                const symbol = new symbolsSchema(data);
-                try {
-                    const newSymbol = await symbol.save();
-                    response.status(201).json(newSymbol);
-                } catch (error) {
-                    response.status(400).json({ message: error.message });
+                if(data.Message){
+                    response.json({ message: `Symbol: ${request.body.symbol}, ${data.Message}` });
+                } else {
+                    const symbol = new symbolsSchema(data);
+                    try {
+                        const newSymbol = await symbol.save();
+                        response.status(201).json(newSymbol);
+                    } catch (error) {
+                        response.status(400).json({ message: error.message });
+                    }
                 }
         });
     } else {
-        response.json({ message: `Symbol:  ${request.body.symbol}, already exists in watchlist` });
+        response.json({ message: `Symbol: ${request.body.symbol}, already exists in watchlist` });
     }
 });
 
@@ -71,7 +75,6 @@ router.delete('/symbol/:id', getSymbol, async (request, response) => {
     } catch (error) {
         response.status(500).json({ message: error.message });
     }
-  
 });
 
 async function getSymbol(request, response, next) {
@@ -84,15 +87,14 @@ async function getSymbol(request, response, next) {
     } catch (error) {
         return response.status(500).json({ message: error.message });
     }
-
     response.symbol = symbol;
     next();
 }
 
 const getMarketData = symbols => {
-    const isSymbolList = Array.isArray(symbols);
+    // const isSymbolList = Array.isArray(symbols);
     let finalRequest = `${process.env.MARKET_DATA_BASE_URL}?symbol=${symbols}&api_token=${process.env.MARKET_DATA_TOKEN}`;
-    return axios.get(finalRequest).then(response => isSymbolList ? response.data.data : response.data.data[0]);
+    return axios.get(finalRequest).then(response => response.data.Message ? response.data : response.data.data[0]);
 };
 
 module.exports = router;

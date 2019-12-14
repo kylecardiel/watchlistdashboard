@@ -31,7 +31,12 @@ export const TableBodys = props => {
             <TableCell>{`${currencySymbol}${record.day_low}`}</TableCell>
             <TableCell>{`${currencySymbol}${record.close_yesterday}`}</TableCell>
             <TableCell>{formatedVolume}</TableCell>
-            <ActionButtons refresh={props.refresh} record_id={record._id}/>
+            <ActionButtons 
+                removeSymbol={props.removeSymbol} 
+                record_id={record._id} 
+                recordSymbol={record.symbol}
+                updateSymbol={props.updateSymbol}
+            />
         </TableRow>;
     });
 

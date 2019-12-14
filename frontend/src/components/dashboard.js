@@ -8,28 +8,35 @@ import Typography from '@material-ui/core/Typography';
 import { AddNewSymbol } from 'components/addNewSymbol';
 import { NOTIFICATION_TYPES, NOTIFICATION_MESSAGES } from 'shared/constants/stringConstantsSelectors';
 import { NotificationUtil } from 'shared/util/displayNotifications';
+import sortBy from 'lodash/sortBy';
 
 export class Dashboard extends Component {
 
     componentDidMount() {
         // const defualtSymbols = ['SPY','DJI','RUS','NDX','TSLA'];
-        this.data();
+        this.getWatchlistSymbols();
     }
 
-    data = () => {
+    getWatchlistSymbols = () => {
         API.getAllWatchlistSymbols()
-            .then((data) => {
-                this.props.setDisplayData(data);
+            .then(data => {
+                data.message 
+                    ? NotificationUtil.display(NOTIFICATION_TYPES.ERROR, data.message) 
+                    : this.props.setDisplayData(this.sortWatchlistBySymbolAlphabetically(data));
             });
+    }
+
+    sortWatchlistBySymbolAlphabetically = symbols => {
+        return sortBy(symbols, [ s => s.symbol ])
     }
 
     addNewSymbol = symbol => {
         API.createNewWatchlistSymbol(symbol)
             .then(data => {
                 if(data.message){
-                    NotificationUtil.display(NOTIFICATION_TYPES.ERROR, data.message)
+                    NotificationUtil.display(NOTIFICATION_TYPES.ERROR, data.message);
                 } else {
-                    this.props.addSymbol(data)
+                    this.props.addSymbol(data);
                     NotificationUtil.display(NOTIFICATION_TYPES.SUCCESS, NOTIFICATION_MESSAGES.SUCCESSFUL_ADD);
                 }
             });
@@ -38,7 +45,9 @@ export class Dashboard extends Component {
     getQuoteDetails = symbolId => {
         API.getSpecificSymbol(symbolId)
             .then(data => {
-                this.props.setQuoteDetails(data);
+                data.message 
+                    ? NotificationUtil.display(NOTIFICATION_TYPES.ERROR, data.message) 
+                    : this.props.setQuoteDetails(data);
             });
     }
 
@@ -47,7 +56,7 @@ export class Dashboard extends Component {
         this.props.displayedData.map(record => 
             symbolList.push(record.symbol)
         );
-        this.data(symbolList);
+        this.getWatchlistSymbols(symbolList);
     }
 
     render() {
@@ -56,6 +65,8 @@ export class Dashboard extends Component {
             displayedData,
             quoteDetails,
             setQuoteDetails,
+            removeSymbol,
+            updateSymbol,
         } = this.props;
 
         const quoteDetailCardDisplay = quoteDetails && 
@@ -72,7 +83,7 @@ export class Dashboard extends Component {
                     <AddNewSymbol onSubmit={this.addNewSymbol}/>
                 </div>
                 <div style={{ width: '80%', margin: '1%' }}>
-                    <WatchListTable data={displayedData} onRowClick={this.getQuoteDetails} refresh={this.data}/>
+                    <WatchListTable data={displayedData} onRowClick={this.getQuoteDetails} removeSymbol={removeSymbol} updateSymbol={updateSymbol}/>
                 </div>
                 {quoteDetailCardDisplay}
             </FlexboxContainer>

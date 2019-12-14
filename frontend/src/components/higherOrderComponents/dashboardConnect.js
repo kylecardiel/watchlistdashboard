@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Dashboard } from 'components/dashboard';
 import { getDisplayedData, getQuoteDetails } from 'store/dataSet/dataSetSelector';
-import { setDisplayData, setQuoteDetailsData, addSymbol } from 'store/dataSet/dataSetActions';
+import { setDisplayData, setQuoteDetailsData, addSymbol, removeSymbol, updateSymbol } from 'store/dataSet/dataSetActions';
 
 export class DashboardConnect extends Component {
     render() {
@@ -25,7 +25,13 @@ export const mapDispatchToProps = dispatch => ({
     },
     addSymbol: symbolData => {
         dispatch(addSymbol(symbolData));
-    }
+    },
+    removeSymbol: symbolData => {
+        dispatch(removeSymbol(symbolData));
+    },
+    updateSymbol: symbolData => {
+        dispatch(updateSymbol(symbolData));
+    }, 
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

@@ -11,7 +11,12 @@ export const WatchListTable = props => {
         <Paper>
             <Table>
                 <TableHeaders columnDefinitions={WatchlistColumnDefinitions}/>
-                <TableBodys data={props.data}n onRowClick={props.onRowClick} refresh={props.refresh}/> 
+                <TableBodys 
+                    data={props.data} 
+                    onRowClick={props.onRowClick} 
+                    removeSymbol={props.removeSymbol}
+                    updateSymbol={props.updateSymbol}
+                /> 
             </Table>
         </Paper>
     );

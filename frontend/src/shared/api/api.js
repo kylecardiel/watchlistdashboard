@@ -1,11 +1,10 @@
 import { dashboardSymbolRestApi } from 'config';
-import sortBy from 'lodash/sortBy';
 
 const axios = require('axios');
 
 export class API {
     static getAllWatchlistSymbols = () => {
-        return axios.get(dashboardSymbolRestApi).then(response => response.data && sortBy(response.data, [ s => s.symbol ]));
+        return axios.get(dashboardSymbolRestApi).then(response => response.data);
     }
 
     static getSpecificSymbol = symbolId => {
@@ -14,7 +13,7 @@ export class API {
     }
 
     static createNewWatchlistSymbol = symbol => {
-        return axios.post(dashboardSymbolRestApi, { symbol }).then(data => data.data);
+        return axios.post(dashboardSymbolRestApi, { symbol }).then(response => response.data);
     }
 
     static deleteWatchlistBySymbol = symbolId => {
@@ -24,6 +23,6 @@ export class API {
 
     static updateWatchlistBySymbol = symbolId => {
         const updateURL = `${dashboardSymbolRestApi}/${symbolId}`;
-        return axios.patch(updateURL);
+        return axios.patch(updateURL).then(response => response.data);
     }
 }

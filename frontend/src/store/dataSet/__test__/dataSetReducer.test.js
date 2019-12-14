@@ -59,6 +59,19 @@ describe('Dataset Reducer', () => {
         });
     });
 
+    describe('for action type UPDATE_SYMBOL', () => {
+        it('should update symbol', () => {
+            initialState.dataSet.displayedData = [{ symbol: 'name1', name:'initial' }, { symbol: 'name2' }];
+            const symbolData = { symbol: 'name1', name: 'updated' };
+            action = {
+                type: actionTypes.UPDATE_SYMBOL,
+                payload: symbolData,
+            };
+            const newState = dataSet(initialState.dataSet, action);
+            expect(newState.displayedData).toStrictEqual([{ symbol: 'name1', name: 'updated' }, { symbol: 'name2' }]);
+        });
+    });
+
     describe('for action type SET_QUOTE_DETAILS_DATA', () => {
         it('should update quote detail data', () => {
             const quoteDetails = { symbol: 'name1' };

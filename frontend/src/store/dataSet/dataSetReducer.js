@@ -24,6 +24,16 @@ export const dataSet = (state = initialState.dataSet, action) => {
         cloneState.displayedData = sortBy(dataToUpdate, [ s => s.symbol ]);
         return cloneState;
     }
+    case actions.UPDATE_SYMBOL: {
+        const cloneState = cloneDeep(state);
+        cloneState.displayedData = cloneState.displayedData.filter(function (element) {
+            return element['symbol'] !== action.payload.symbol;
+        });
+        const dataToUpdate = cloneState.displayedData;
+        dataToUpdate.push(action.payload);
+        cloneState.displayedData = sortBy(dataToUpdate, [ s => s.symbol ]);
+        return cloneState;
+    }
     case actions.SET_QUOTE_DETAILS_DATA: {
         const cloneState = cloneDeep(state);
         cloneState.quoteDetail = action.payload;

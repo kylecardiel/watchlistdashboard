@@ -55,6 +55,19 @@ describe('Data Set Actions', () => {
         });
     });
 
+    describe('action: updateSymbol', () => {
+        it('should create an action to update symbol', () => {
+            const symbolData = { symbol: 'name1' };
+            store = mockStore(initialState);
+            store.dispatch(dataSetActions.updateSymbol(symbolData));
+            actions = store.getActions();
+
+            expect(actions).toHaveLength(1);
+            expect(actions[0].type).toBe(dataSetActions.UPDATE_SYMBOL);
+            expect(actions[0].payload).toBe(symbolData);
+        });
+    });
+
     describe('action: setQuoteDetailsData', () => {
         it('should create an action to set quote details data', () => {
             const quoteDetails = { symbol: 'name1' };
