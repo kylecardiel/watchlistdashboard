@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.5.2",
     "@material-ui/icons": "^4.5.1",
+    "concurrently": "^5.0.1",
     "contentful": "^7.10.0",
     "lodash": "^4.17.15",
     "npm": "^6.13.0",
@@ -21,6 +22,9 @@
     "styled-components": "^4.4.1"
   },
   "scripts": {
+    "backend": "cd server && nodemon src/server.js",
+    "frontend": "npm run start",
+    "fullApp": "concurrently \"npm run backend\" \"npm run frontend\"",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
