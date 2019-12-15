@@ -51,14 +51,6 @@ export class Dashboard extends Component {
             });
     }
 
-    updateWatchlistData = () => {
-        let symbolList = [];
-        this.props.displayedData.map(record => 
-            symbolList.push(record.symbol)
-        );
-        this.getWatchlistSymbols(symbolList);
-    }
-
     render() {
 
         const {
