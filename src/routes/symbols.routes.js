@@ -35,20 +35,20 @@ router.post('/symbol/', async (request, response) => {
 
     if(!symbolAlreadyExists){
         getMarketData(request.body.symbol)
-        .then(
-            async data => {
-                if(data.Message){
-                    response.json({ message: `Symbol: ${request.body.symbol}, ${data.Message}` });
-                } else {
-                    const symbol = new symbolsSchema(data);
-                    try {
-                        const newSymbol = await symbol.save();
-                        response.status(201).json(newSymbol);
-                    } catch (error) {
-                        response.status(400).json({ message: error.message });
+            .then(
+                async data => {
+                    if(data.Message){
+                        response.json({ message: `Symbol: ${request.body.symbol}, ${data.Message}` });
+                    } else {
+                        const symbol = new symbolsSchema(data);
+                        try {
+                            const newSymbol = await symbol.save();
+                            response.status(201).json(newSymbol);
+                        } catch (error) {
+                            response.status(400).json({ message: error.message });
+                        }
                     }
-                }
-        });
+                });
     } else {
         response.json({ message: `Symbol: ${request.body.symbol}, already exists in watchlist` });
     }
@@ -58,7 +58,7 @@ router.patch('/symbol/:id', getSymbol, async (request, response) => {
     getMarketData(response.symbol.symbol)
         .then(
             async data => {
-                Object.assign(response.symbol, data)
+                Object.assign(response.symbol, data);
                 try {
                     const updateSymbol = await response.symbol.save();
                     response.json(updateSymbol);

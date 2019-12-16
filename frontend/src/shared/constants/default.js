@@ -1,0 +1,1 @@
+export const defaultSymbolList = ['SPY','DJI','RUS','NDX','TSLA'];

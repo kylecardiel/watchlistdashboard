@@ -30,7 +30,7 @@ export const ActionButtons = props => {
                 if(data.message){
                     NotificationUtil.display(NOTIFICATION_TYPES.ERROR, data.message);
                 } else {
-                    NotificationUtil.display(NOTIFICATION_TYPES.SUCCESS, NOTIFICATION_MESSAGES.SUCCESSFUL_UPDATE);
+                    NotificationUtil.display(NOTIFICATION_TYPES.SUCCESS, NOTIFICATION_MESSAGES.SUCCESSFUL_UPDATE(props.recordSymbol));
                     props.updateSymbol(data);
                 }
             });

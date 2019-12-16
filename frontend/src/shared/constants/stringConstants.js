@@ -4,6 +4,7 @@ export const STRING_CONSTANTS = Object.freeze({
     },
     BUTTONS: {
         ADD_TO_LIST: 'Add to WatchList',
+        ADD_DEFAULT_SYMBOLS: 'Add Default Symbols',
     },
     TABLE: {
         NAME: 'My Watchlist',
@@ -30,7 +31,7 @@ export const STRING_CONSTANTS = Object.freeze({
         },
         MESSAGES:{
             SUCCESSFUL_ADD: 'Symbol successful added to watchlist',
-            SUCCESSFUL_UPDATE: 'Symbol successful updated',
+            SUCCESSFUL_UPDATE: symbol => `${symbol} successful updated`,
             SUCCESSFUL_DELETE: 'Symbol deleted successfully',
         }
     },
