@@ -30,14 +30,22 @@ This application uses the MERN stack desgin (MongoDb, Express.js, React and Node
 - [axios](https://www.npmjs.com/package/axios)
 
 ## Setup
+
+### Locally or codesandbox.io environment:
+##### Locally
 - Clone repo
 - Navigate to your repo and install all dependencies
 ```
 npm install
 ```
+##### codesandbox.io
+- create sandbox with from github repo, copy this repo link
+
+### database
 - Create a [mongodb](https://www.mongodb.com) database (you can do it in the cloud for free)
 - Make sure when setting up db you whitelist your servers IP address
 - Once db set up copy the connection link for your application and replace process.env.DATABASE_URL (server.js file: line 10) with your link. 
+
 
 ## Running the application
 You can either start up the UI and backend server separately with:
