@@ -11,6 +11,10 @@ export const WatchlistColumnDefinitions = [
         field:  'price_open',
     },
     {
+        headerName: COLUMN_HEADERS.YESTERDAY_CLOSE,
+        field:  'close_yesterday',
+    },
+    {
         headerName: COLUMN_HEADERS.DAY_HIGH,
         field:  'day_high',
     },
@@ -18,10 +22,7 @@ export const WatchlistColumnDefinitions = [
         headerName: COLUMN_HEADERS.DAY_LOW,
         field:  'day_low',
     },
-    {
-        headerName: COLUMN_HEADERS.YESTERDAY_CLOSE,
-        field:  'close_yesterday',
-    },
+
     {
         headerName: COLUMN_HEADERS.VOLUME,
         field:  'volume',

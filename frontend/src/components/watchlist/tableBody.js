@@ -27,9 +27,9 @@ export const TableBodys = props => {
         return <TableRow key={record.symbol} className={classes.row} onClick={e => props.onRowClick(record._id)}>
             <TableCell component="th" scope="row">{record.symbol}</TableCell>
             <TableCell>{`${currencySymbol}${record.price_open}`}</TableCell>
+            <TableCell>{`${currencySymbol}${record.close_yesterday}`}</TableCell>
             <TableCell>{`${currencySymbol}${record.day_high}`}</TableCell>
             <TableCell>{`${currencySymbol}${record.day_low}`}</TableCell>
-            <TableCell>{`${currencySymbol}${record.close_yesterday}`}</TableCell>
             <TableCell>{formatedVolume}</TableCell>
             <ActionButtons 
                 removeSymbol={props.removeSymbol} 
